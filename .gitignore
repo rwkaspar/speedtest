@@ -9,6 +9,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+speedtest_results.csv
 build/
 develop-eggs/
 dist/
