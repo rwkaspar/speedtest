@@ -1,24 +1,25 @@
 import speedtest
 import csv
 import time
+import os
 
 # Setze die Dauer der Tests und das Intervall
 INTERVAL = 10  # Interval in Sekunden (z.B. alle 60 Sekunden)
-# DURATION = 32400  # Gesamtdauer in Sekunden (z.B. 1 Stunde)
+# DURATION = 3600  # Gesamtdauer in Sekunden (z.B. 1 Stunde)
 
-# Ergebnisdatei
 OUTPUT_FILE = "speedtest_results.csv"
-
-# Stelle sicher, dass die CSV-Datei die Header enthält
 header = ['Timestamp', 'Download Speed (Mbit/s)', 'Upload Speed (Mbit/s)', 'Ping (ms)']
 
 # Initialisiere den Speedtest
 st = speedtest.Speedtest()
 
-# Schreibe die Header in die CSV-Datei
-with open(OUTPUT_FILE, mode='w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(header)
+if not os.path.exists(OUTPUT_FILE):
+    with open(OUTPUT_FILE, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(header)
+        print(f"{OUTPUT_FILE} wurde erstellt.")
+else:
+    print(f"{OUTPUT_FILE} existiert bereits.")
 
 if 'DURATION' in locals():
     end_time = time.time() + DURATION
