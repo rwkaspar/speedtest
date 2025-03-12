@@ -26,11 +26,15 @@ if 'DURATION' in locals():
 
 
 while True or time.time() < end_time:
-    # Führe den Speedtest durch
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
-    ping = st.get_best_server()['host']
-    download_speed = st.download() / 1_000_000  # in Mbit/s
-    upload_speed = st.upload() / 1_000_000  # in Mbit/s
+    try:
+        ping = st.get_best_server()['host']
+        download_speed = st.download() / 1_000_000  # in Mbit/s
+        upload_speed = st.upload() / 1_000_000  # in Mbit/s
+    except:  # values for no connection
+        ping = -1
+        download_speed = -1
+        upload_speed = -1
 
     # Schreibe die Ergebnisse in die CSV-Datei
     with open(OUTPUT_FILE, mode='a', newline='') as file:
@@ -45,6 +49,9 @@ while True or time.time() < end_time:
     print("--------------------------")
 
     # Warte für das Intervall
-    time.sleep(INTERVAL)
+    if INTERVAL > 0:
+        time.sleep(INTERVAL)
+    else:
+        continue
 
 print(f"Test abgeschlossen. Ergebnisse in {OUTPUT_FILE} gespeichert.")

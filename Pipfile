@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 speedtest-cli = "*"
 pyinstaller = "*"
+matplotlib = "*"
 
 [dev-packages]
 
